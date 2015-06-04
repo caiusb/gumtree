@@ -49,6 +49,10 @@ public class DiffView implements Renderable {
 		diffs.produce();
 	}
 	
+	public DiffView(String aContents, String bContents) {
+		
+	}
+	
 
 	@Override
 	public void renderOn(HtmlCanvas html) throws IOException {
