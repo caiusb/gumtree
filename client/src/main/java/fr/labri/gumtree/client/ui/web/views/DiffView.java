@@ -4,9 +4,11 @@ import static org.rendersnake.HtmlAttributesFactory.class_;
 import static org.rendersnake.HtmlAttributesFactory.lang;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringBufferInputStream;
+import java.io.Reader;
 import java.io.StringReader;
 
 import org.rendersnake.DocType;
@@ -47,18 +49,20 @@ public class DiffView implements Renderable {
 		this.dstName = dstName;
 		Tree src = TreeGeneratorRegistry.getInstance().getTree(fSrc.getAbsolutePath());
 		Tree dst = TreeGeneratorRegistry.getInstance().getTree(fDst.getAbsolutePath());
-		Matcher matcher = MatcherFactories.newMatcher(src, dst);
-		matcher.match();
-		diffs = new HtmlDiffs(fSrc, fDst, src, dst, matcher);
-		diffs.produce();
+		produceDiffs(new FileReader(fSrc), new FileReader(fDst), src, dst);
 	}
 	
 	public DiffView(String srcContents, String dstContents) throws IOException {
 		JdtTreeGenerator treeGenerator = new JdtTreeGenerator();
 		Tree src = treeGenerator.generateFromString(srcContents);
 		Tree dst = treeGenerator.generateFromString(dstContents);
+	}
+	
+	private void produceDiffs(Reader srcReader, Reader dstReader, Tree src, Tree dst)
+			throws IOException {
 		Matcher matcher = MatcherFactories.newMatcher(src, dst);
-		diffs = new HtmlDiffs(new StringReader(srcContents), new StringReader(dstContents), src, dst, matcher);
+		matcher.match();
+		diffs = new HtmlDiffs(srcReader, dstReader, src, dst, matcher);
 		diffs.produce();
 	}
 	
