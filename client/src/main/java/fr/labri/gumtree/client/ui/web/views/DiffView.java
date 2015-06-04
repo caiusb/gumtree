@@ -6,8 +6,6 @@ import static org.rendersnake.HtmlAttributesFactory.lang;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringBufferInputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -26,10 +24,8 @@ public class DiffView implements Renderable {
 	
 	private HtmlDiffs diffs;
 	
-	private File fSrc;
 	private String srcName;
 	
-	private File fDst;
 	private String dstName;
 
 	private String urlFolder = "";
@@ -43,8 +39,6 @@ public class DiffView implements Renderable {
 	}
 	
 	public DiffView(File fSrc, File fDst, String srcName, String dstName) throws IOException {
-		this.fSrc = fSrc;
-		this.fDst = fDst;
 		this.srcName = srcName;
 		this.dstName = dstName;
 		Tree src = TreeGeneratorRegistry.getInstance().getTree(fSrc.getAbsolutePath());

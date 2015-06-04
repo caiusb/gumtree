@@ -44,10 +44,6 @@ public final class HtmlDiffs {
 	
 	private MappingStore mappings;
 	
-	public HtmlDiffs(File fSrc, File fDst, Tree src, Tree dst, Matcher matcher) throws FileNotFoundException {
-		this(new FileReader(fSrc), new FileReader(fDst), src, dst, matcher);
-	}
-	
 	public HtmlDiffs(Reader fSrc, Reader fDst, Tree src, Tree dst, Matcher matcher) {
 		this.fSrcReader = fSrc;
 		this.fDstReader = fDst;
