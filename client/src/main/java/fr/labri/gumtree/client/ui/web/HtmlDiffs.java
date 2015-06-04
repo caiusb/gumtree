@@ -2,8 +2,10 @@ package fr.labri.gumtree.client.ui.web;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
@@ -34,17 +36,21 @@ public final class HtmlDiffs {
 	
 	private Tree dst;
 	
-	private File fSrc;
+	private Reader fSrcReader;
 	
-	private File fDst;
+	private Reader fDstReader;
 	
 	private Matcher matcher;
 	
 	private MappingStore mappings;
 	
-	public HtmlDiffs(File fSrc, File fDst, Tree src, Tree dst, Matcher matcher) {
-		this.fSrc = fSrc;
-		this.fDst = fDst;
+	public HtmlDiffs(File fSrc, File fDst, Tree src, Tree dst, Matcher matcher) throws FileNotFoundException {
+		this(new FileReader(fSrc), new FileReader(fDst), src, dst, matcher);
+	}
+	
+	public HtmlDiffs(Reader fSrc, Reader fDst, Tree src, Tree dst, Matcher matcher) {
+		this.fSrcReader = fSrc;
+		this.fDstReader = fDst;
 		this.src = src;
 		this.dst = dst;
 		this.matcher = matcher;
@@ -99,7 +105,7 @@ public final class HtmlDiffs {
 		}
 
 		StringWriter w1 = new StringWriter();
-		BufferedReader r = new BufferedReader(new FileReader(fSrc));
+		BufferedReader r = new BufferedReader(fSrcReader);
 		int cursor = 0;
 		
 		while (r.ready()) {
@@ -114,7 +120,7 @@ public final class HtmlDiffs {
 		srcDiff = w1.toString();
 		
 		StringWriter w2 = new StringWriter();
-		r = new BufferedReader(new FileReader(fDst));
+		r = new BufferedReader(fDstReader);
 		cursor = 0;
 	
 		while (r.ready()) {
