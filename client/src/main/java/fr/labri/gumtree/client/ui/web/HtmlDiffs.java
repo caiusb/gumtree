@@ -104,36 +104,26 @@ public final class HtmlDiffs {
 			}
 		}
 
+		
+		srcDiff = getDiffString(fSrcReader, ltags);
+		dstDiff = getDiffString(fDstReader, rtags);
+	}
+
+	private String getDiffString(Reader r, TagIndex tags) throws IOException {
 		StringWriter w1 = new StringWriter();
-		BufferedReader r = new BufferedReader(fSrcReader);
 		int cursor = 0;
 		
 		while (r.ready()) {
 			char cr = (char) r.read();
-			w1.append(ltags.getEndTags(cursor));
-			w1.append(ltags.getStartTags(cursor));
+			w1.append(tags.getEndTags(cursor));
+			w1.append(tags.getStartTags(cursor));
 			append(cr, w1);
 			cursor++;
 		}
-		w1.append(ltags.getEndTags(cursor));
+		w1.append(tags.getEndTags(cursor));
 		r.close();
-		srcDiff = w1.toString();
-		
-		StringWriter w2 = new StringWriter();
-		r = new BufferedReader(fDstReader);
-		cursor = 0;
-	
-		while (r.ready()) {
-			char cr = (char) r.read();
-			w2.append(rtags.getEndTags(cursor));
-			w2.append(rtags.getStartTags(cursor));
-			append(cr, w2);
-			cursor++;
-		}
-		w2.append(rtags.getEndTags(cursor));
-		r.close();
-		
-		dstDiff = w2.toString();
+		String string = w1.toString();
+		return string;
 	}
 	
 	public String getSrcDiff() {
