@@ -5,6 +5,9 @@ import static org.rendersnake.HtmlAttributesFactory.lang;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringBufferInputStream;
+import java.io.StringReader;
 
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
@@ -12,6 +15,7 @@ import org.rendersnake.Renderable;
 
 import fr.labri.gumtree.client.TreeGeneratorRegistry;
 import fr.labri.gumtree.client.ui.web.HtmlDiffs;
+import fr.labri.gumtree.gen.jdt.JdtTreeGenerator;
 import fr.labri.gumtree.matchers.Matcher;
 import fr.labri.gumtree.matchers.MatcherFactories;
 import fr.labri.gumtree.tree.Tree;
@@ -49,8 +53,13 @@ public class DiffView implements Renderable {
 		diffs.produce();
 	}
 	
-	public DiffView(String aContents, String bContents) {
-		
+	public DiffView(String srcContents, String dstContents) throws IOException {
+		JdtTreeGenerator treeGenerator = new JdtTreeGenerator();
+		Tree src = treeGenerator.generateFromString(srcContents);
+		Tree dst = treeGenerator.generateFromString(dstContents);
+		Matcher matcher = MatcherFactories.newMatcher(src, dst);
+		diffs = new HtmlDiffs(new StringReader(srcContents), new StringReader(dstContents), src, dst, matcher);
+		diffs.produce();
 	}
 	
 
