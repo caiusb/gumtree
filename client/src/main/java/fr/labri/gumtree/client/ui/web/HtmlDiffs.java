@@ -114,7 +114,10 @@ public final class HtmlDiffs {
 		int cursor = 0;
 		
 		while (r.ready()) {
-			char cr = (char) r.read();
+			int read = r.read();
+			if (read == -1)
+				break;
+			char cr = (char) read;
 			w1.append(tags.getEndTags(cursor));
 			w1.append(tags.getStartTags(cursor));
 			append(cr, w1);
