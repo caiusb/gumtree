@@ -54,8 +54,9 @@ public class DiffView implements Renderable {
 	
 	public DiffView(String srcContents, String dstContents) throws IOException {
 		JdtTreeGenerator treeGenerator = new JdtTreeGenerator();
-		Tree src = treeGenerator.generateFromString(srcContents);
-		Tree dst = treeGenerator.generateFromString(dstContents);
+		Tree src = treeGenerator.fromString(srcContents);
+		Tree dst = treeGenerator.fromString(dstContents);
+		produceDiffs(new StringReader(srcContents), new StringReader(dstContents), src, dst);
 	}
 	
 	private void produceDiffs(Reader srcReader, Reader dstReader, Tree src, Tree dst)
