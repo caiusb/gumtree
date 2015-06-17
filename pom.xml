@@ -12,10 +12,11 @@
 		<url>http://se.labri.fr</url>
 	</organization>
 	<scm>
-		<connection>scm:hg:https://code.google.com/p/labri-se.gumtree/</connection>
-<developerConnection>scm:hg:https://code.google.com/p/labri-se.gumtree/</developerConnection>
-<url>https://code.google.com/p/labri-se.gumtree/</url>
+		<connection>scm:git:https://github.com/GumTreeDiff/gumtree/</connection>
+		<developerConnection>scm:git:https://github.com/GumTreeDiff/gumtree/</developerConnection>
+		<url>https://github.com/GumTreeDiff/gumtree/</url>
 	</scm>
+
 	<modules>
 		<module>core</module>
 		<module>gen.jdt</module>
@@ -27,29 +28,26 @@
 		<module>gen.antlr-antlr</module>
 		<module>client</module>
 	</modules>
+
 	<repositories>
 		<repository>
 			<id>se</id>
 			<name>SE repository</name>
 			<url>http://se.labri.fr/maven</url>
 		</repository>
-	<repository>
-	    <id>rendersnake-repo</id>
-		    <name>Repository for rendersnake</name>
-			    <url>http://rendersnake.googlecode.com/svn/repo</url>
-				</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.0</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -63,6 +61,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<distributionManagement>
 		<repository>
 			<id>se</id>
