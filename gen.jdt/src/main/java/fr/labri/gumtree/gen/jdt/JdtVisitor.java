@@ -20,8 +20,19 @@ package fr.labri.gumtree.gen.jdt;
 
 import java.util.Stack;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.compiler.ast.BinaryExpression;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.Type;
 
 import fr.labri.gumtree.tree.Tree;
 
@@ -56,7 +67,7 @@ public class JdtVisitor  extends AbstractJdtVisitor {
 		else if (n instanceof PostfixExpression) label = ((PostfixExpression) n).getOperator().toString();
 		else if (n instanceof Assignment) label = ((Assignment) n).getOperator().toString();
 
-		Tree t = new Tree(type, label, n.getClass().getSimpleName());
+		Tree t = new JdtTree(type, label, n);
 		t.setPos(n.getStartPosition());
 		t.setLength(n.getLength());
 
