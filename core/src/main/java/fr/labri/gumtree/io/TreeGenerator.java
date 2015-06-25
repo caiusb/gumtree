@@ -18,7 +18,7 @@ public abstract class TreeGenerator {
 		return tree;
 	}
 	
-	public Tree fromString(String contents) throws IOException {
+	public Tree fromString(String contents) {
 		Tree tree = generateFromString(contents);
 		return processTree(tree);
 	}
