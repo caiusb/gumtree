@@ -24,8 +24,6 @@
 		<module>gen.ruby</module>
 		<module>gen.c</module>
 		<module>gen.antlr</module>
-		<module>gen.r</module>
-		<module>gen.antlr-antlr</module>
 		<module>client</module>
 	</modules>
 
