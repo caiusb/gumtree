@@ -29,7 +29,6 @@ public class TreeGeneratorRegistry {
 		producers = new ArrayList<>();
 		producers.add(new JdtTreeGenerator());
 		producers.add(new CdJdtTreeGenerator());
-		producers.add(new RhinoTreeGenerator());
 		producers.add(new CTreeGenerator());
 		producers.add(new RubyTreeGenerator());
 	}
