@@ -45,10 +45,6 @@ subprojects {
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 configure(subprojects.findAll { it.name != 'core' }) {
     dependencies {
         implementation project(':core')
