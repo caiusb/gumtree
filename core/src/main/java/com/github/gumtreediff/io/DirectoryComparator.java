@@ -91,7 +91,7 @@ public class DirectoryComparator {
 
             Set<String> deletedFiles = new HashSet<>();
             deletedFiles.addAll(vSrc.files);
-            deletedFiles.removeAll(vDst.files);
+                deletedFiles.removeAll(vDst.files);
             for (String file : deletedFiles) this.deletedFiles.add(toSrcFile(file));
 
             Set<String> commonFiles = new HashSet<>();

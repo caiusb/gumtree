@@ -1,6 +1,6 @@
 apply plugin: 'application'
 
-mainClassName = 'com.github.gumtreediff.client.Run'
+mainClassName = 'com.github.gumtreediff.client.diff.StaticWebDiff'
 applicationName = 'gumtree'
 archivesBaseName = 'gumtree'
 jar.enabled = false
