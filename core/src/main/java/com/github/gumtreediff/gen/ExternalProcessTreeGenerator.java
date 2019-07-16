@@ -22,8 +22,12 @@ package com.github.gumtreediff.gen;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class ExternalProcessTreeGenerator extends TreeGenerator {
+
+    Logger logger = Logger.getLogger("gen.ext");
 
     public String readStandardOutput(Reader r) throws IOException {
         // TODO avoid recreating file if supplied reader is already a file
@@ -37,12 +41,15 @@ public abstract class ExternalProcessTreeGenerator extends TreeGenerator {
             while ((line = br.readLine()) != null)
                 buf.append(line + System.lineSeparator());
             p.waitFor();
-            if (p.exitValue() != 0)
+            if (p.exitValue() != 0) {
+                logger.log(Level.SEVERE, "External parser exited with non 0 return value. Aborting. Ouptut so far: " + buf);
                 throw new RuntimeException(buf.toString());
+            }
             r.close();
             p.destroy();
             return buf.toString();
         } catch (InterruptedException e) {
+            logger.log(Level.SEVERE, e.getLocalizedMessage() + "; " + e.getCause());
             throw new RuntimeException(e);
         } finally {
             f.delete();

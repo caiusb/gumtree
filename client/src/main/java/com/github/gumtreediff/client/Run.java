@@ -27,8 +27,12 @@ import org.atteo.classindex.ClassIndex;
 
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Run {
+
+    static Logger logger = Logger.getLogger("Run");
 
     public static class Options implements Option.Context {
         @Override
@@ -50,12 +54,15 @@ public class Run {
     }
 
     public static void initGenerators() {
+        logger.log(Level.INFO, "Registering generators");
         ClassIndex.getSubclasses(TreeGenerator.class).forEach(
                 gen -> {
                     com.github.gumtreediff.gen.Register a =
                             gen.getAnnotation(com.github.gumtreediff.gen.Register.class);
-                    if (a != null)
+                    if (a != null) {
                         Generators.getInstance().install(gen, a);
+                        logger.log(Level.INFO, "Registering parser: " + gen.getSimpleName());
+                    }
                 });
     }
 

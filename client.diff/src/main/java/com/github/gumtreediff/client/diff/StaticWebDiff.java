@@ -8,10 +8,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StaticWebDiff  {
+
+    static Logger logger = Logger.getLogger("client.diff.static");
 
     static {
         Run.initClients();
@@ -19,6 +23,9 @@ public class StaticWebDiff  {
     }
 
     public static void main(String[] args) throws Exception {
+        Logger global = Logger.getGlobal();
+        global.setLevel(Level.SEVERE);
+
         String csvFile = args[0];
         String outputFolder = args[1];
         File output = new File(outputFolder);
@@ -29,6 +36,7 @@ public class StaticWebDiff  {
         sliding(toProcess, 2).forEach(p -> {
             File firstFile = new File(p.get(0));
             File secondFile = new File(p.get(1));
+            logger.log(Level.INFO, "Diffing " + firstFile + " and " + secondFile);
             try {
                 String htmlDiff = StringHtmlDiff.getHtmlOfDiff(firstFile, secondFile);
                 Files.write(Paths.get(outputFolder, firstFile.getName() + "_" + secondFile.getName() + ".html"),
